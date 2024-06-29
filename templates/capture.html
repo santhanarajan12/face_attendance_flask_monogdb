@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shalimar&display=swap" rel="stylesheet">
+    <title>Capture</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+        }
+        .row{
+            width:100%;
+            height:100%;
+        }
+        .col-lg-8{
+            display: flex;
+            flex-direction: column;
+        }
+        .mt-5{
+            margin-left:2%;
+            padding:1px;
+            font-family: Shalimar;
+            font-size: 2rem;
+            color:rgb(228, 166, 74);
+        }
+        form{
+            display: flex;
+            width:20%;
+            margin-top:2%;
+            margin-left: 40%;
+            flex-direction: column;
+        }
+        #regno{
+            padding:6px;
+            font-size: 1rem; 
+            border-radius:4px;           
+        }
+        #capturebtn{
+            margin-top: 1%;
+            padding:6px;
+            font-size: 1rem;
+            color: #ffff;
+            border-radius: 4px;
+
+            background-color: #2f2f2f;
+        }
+        #videosrc{
+            padding:1%;
+            margin-left: 31%;
+            width:500px;
+            border-radius: 21px;
+        }
+    </style>
+</head>
+<body style="background-image: url(/static/bg1.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8  offset-lg-2">
+                <h2 class="mt-5" >Mark Your Attendence by clicking on Capture</h2>
+                    <div class="glass">
+                    <h3 style="font-family:courier;margin-left: 1%;    color:#ffff;">Instructions:</h3>
+                    <ol style="font-family:courier;    color:#ffff;">
+                    <li>Filling your registration number is neccessary.</li>
+                    <li>Make sure you have proper lighting while capturing the picture.</li>
+                    </div>
+                <img id="videosrc" src="{{ url_for('video_feed') }}">
+                <form method="POST" action="{{ url_for('tasks') }}">
+                    <!-- <input id="regno" type="text" placeholder="Registration number" name="regisno" required> -->
+                    <p id="info" style="color:#ffff;font-family: cursive;font-size: 1rem;width:150%;margin-left: -5%;">  </p>
+                    <input id="capturebtn" type="submit" value="Exit" name="click"/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+    var I=setInterval(update, 500);
+    var s="Z";
+        function update()
+        {
+            // while(true)
+            // {
+               
+                fetch('/getinfo')
+                .then(data => {
+                    return data.json();
+                    })
+                    .then(jsoninfo => {
+                    console.log(jsoninfo);
+                    s=jsoninfo.info
+                    document.getElementById("info").innerHTML=s;
+                    console.log(typeof(s))
+                    // console.log(s.charAt(0));
+                    }).catch((err)=>{console.log(err)});
+                   
+                    console.log(s);
+
+                    if(s.charAt(0)==='Y'){
+                        clearInterval(I);
+                        // fetch('/redirect')
+                        //      .then(data => {
+                        //         console.log("BYE");
+                        //                       });
+
+                        setTimeout(() => {  window.location.replace("/") }, 4000);
+                    }
+          
+            }
+        // }
+        // update();
+        // document. addEventListener('visibilitychange', function(e) {
+
+        //     e.preventDefault();
+        //      fetch("/camerarelease", {
+
+        //         method: "POST",
+
+        //         // Adding body or contents to send
+        //         body: JSON.stringify({
+        //             "uniqcode":"code"
+        //         }),
+
+        //         // Adding headers to the request
+        //         headers: {
+        //             "Content-type": "application/json; charset=UTF-8"
+        //         }
+        //         })
+
+        // })
+ 
+       addEventListener('beforeunload', async function (e) {
+            e.preventDefault();
+
+            await fetch('/camerarelease')
+                .then(data => {
+                    return data.json();
+                    })
+                    .then((jsoninfo) => {})
+            e.returnValue = '';
+            });
+
+    </script>
+</body>
+</html>
