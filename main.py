@@ -19,9 +19,8 @@ status_info="Please wait while marking your Attendence."
 train_data=None
 
 def get_database(DB):
-    # Provide the mongodb atlas url to connect python to mongodb using pymongo
-    # CONNECTION_STRING = "mongodb://localhost:27017"
-    CONNECTION_STRING = "mongodb+srv://santhanarajan12:0G4Y8I82CknQ18Lt@cluster0.oxclotd.mongodb.net/"
+    # Provide the mongodb atlas url to connect python to mongodb
+    CONNECTION_STRING = "https://github.com/santhanarajan12/face_attendance_monogdb.git"
     client = MongoClient(CONNECTION_STRING)
     return client[DB]
     
