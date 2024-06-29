@@ -260,4 +260,4 @@ def gen_frames():  # generate frame by frame from camera
 
 if (__name__=='__main__'):
     # dbname = get_database()
-    app.run(debug=False,host='0.0.0.0')
+    app.run()
