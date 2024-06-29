@@ -20,7 +20,7 @@ train_data=None
 
 def get_database(DB):
     # Provide the mongodb atlas url to connect python to mongodb
-    CONNECTION_STRING = "https://github.com/santhanarajan12/face_attendance_monogdb.git"
+    CONNECTION_STRING = "mongodb+srv://mongodb_pro:NbQEQy3Ao3yP63RV@cluster0.oxclotd.mongodb.net/"
     client = MongoClient(CONNECTION_STRING)
     return client[DB]
     
